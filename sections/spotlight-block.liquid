@@ -1,0 +1,471 @@
+{% if section.blocks.size > 0 %}
+    <div class="spotlight-block section-{{ section.id }}">
+        <div class="{% if section.settings.container == 'fullwidth' %}container-full{% else %}container{% endif %}">
+            {%- if section.settings.heading != blank -%}
+                <div class="section-header text-center">
+                    {% if section.settings.heading_link != blank %}
+                        <a href="{{ section.settings.heading_link }}" class="section-header-link">
+                            <h2>{{ section.settings.heading }}</h2>
+                        </a>
+                    {% else %}
+                        <h2>{{ section.settings.heading }}</h2>
+                    {% endif %}
+                </div>
+            {%- endif -%}
+
+            <div class="spotlight-grid">
+                {%- for block in section.blocks -%}
+                    <div class="spotlight-item spotlight-item-{{ forloop.index }}" data-index="{{ forloop.index }}">
+                        <a href="{{ block.settings.collection_link }}" class="spotlight-link" {{ block.shopify_attributes }}>
+                            <div class="card-content">
+                                {%- if block.settings.image != blank -%}
+                                    <div class="image-wrapper">
+                                        <div class="img-box">
+                                            <img 
+                                                src="{{ block.settings.image | img_url: 'master' }}"
+                                                alt="{{ block.settings.image.alt | escape }}"
+                                                loading="lazy"
+                                                class="main-image"
+                                            >
+                                            
+                                            {% if block.settings.hover_video != blank %}
+                                                <div class="video-wrapper">
+                                                    {% if block.settings.hover_video.type == "youtube" %}
+                                                        <iframe 
+                                                            src="https://www.youtube.com/embed/{{ block.settings.hover_video.id }}?autoplay=1&mute=1&loop=1&playlist={{ block.settings.hover_video.id }}&controls=0&modestbranding=1&rel=0&showinfo=0" 
+                                                            frameborder="0" 
+                                                            allow="autoplay; encrypted-media" 
+                                                            allowfullscreen
+                                                            class="hover-video"
+                                                        ></iframe>
+                                                    {% elsif block.settings.hover_video.type == "vimeo" %}
+                                                        <iframe 
+                                                            src="https://player.vimeo.com/video/{{ block.settings.hover_video.id }}?autoplay=1&loop=1&background=1&muted=1" 
+                                                            frameborder="0" 
+                                                            allow="autoplay; encrypted-media" 
+                                                            allowfullscreen
+                                                            class="hover-video"
+                                                        ></iframe>
+                                                    {% endif %}
+                                                </div>
+                                            {% elsif block.settings.shopify_video_url != blank %}
+                                                <div class="video-wrapper shopify-video-wrapper">
+                                                    <video
+                                                        src="{{ block.settings.shopify_video_url }}"
+                                                        muted
+                                                        loop
+                                                        playsinline
+                                                        preload="auto"
+                                                        class="hover-video shopify-video"
+                                                        data-autoplay="true"
+                                                    ></video>
+                                                </div>
+                                            {% elsif block.settings.hover_image != blank %}
+                                                <img 
+                                                    src="{{ block.settings.hover_image | img_url: 'master' }}"
+                                                    alt="{{ block.settings.hover_image.alt | escape }}"
+                                                    loading="lazy"
+                                                    class="hover-image"
+                                                >
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+
+                                {%- if block.settings.title != blank -%}
+                                    <div class="content">
+                                        <h3 class="title">{{ block.settings.title }}</h3>
+                                        {%- if block.settings.text != blank -%}
+                                            <div class="text">{{ block.settings.text }}</div>
+                                        {%- endif -%}
+                                    </div>
+                                {%- endif -%}
+                            </div>
+                        </a>
+                    </div>
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .spotlight-block {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .section-header-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .section-header-link:hover h2 {
+            opacity: 0.8;
+        }
+
+        .spotlight-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            position: relative;
+        }
+
+        .spotlight-item {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+
+        .spotlight-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Desktop animations - for 3 column layout */
+        @media screen and (min-width: 990px) {
+            /* Top row hover animations */
+            .spotlight-item[data-index="1"]:hover,
+            .spotlight-item[data-index="2"]:hover,
+            .spotlight-item[data-index="3"]:hover {
+                transform: translateY(20px);
+                z-index: 2;
+            }
+
+            .spotlight-item[data-index="1"]:hover ~ .spotlight-item[data-index="4"],
+            .spotlight-item[data-index="2"]:hover ~ .spotlight-item[data-index="5"],
+            .spotlight-item[data-index="3"]:hover ~ .spotlight-item[data-index="6"] {
+                transform: translateY(20px);
+                z-index: 1;
+            }
+
+            /* Bottom row hover animations */
+            .spotlight-item[data-index="4"]:hover,
+            .spotlight-item[data-index="5"]:hover,
+            .spotlight-item[data-index="6"]:hover {
+                transform: translateY(-20px);
+                z-index: 2;
+            }
+        }
+
+        .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            aspect-ratio: 1/1;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.4s ease;
+        }
+
+        .spotlight-item:hover .image-wrapper {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .img-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .main-image,
+        .hover-image,
+        .video-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: all 0.5s ease;
+        }
+
+        .main-image,
+        .hover-image {
+            object-fit: cover;
+        }
+
+        .video-wrapper {
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .hover-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .shopify-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hover-image {
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .spotlight-item:hover .main-image {
+            opacity: 0;
+        }
+
+        .spotlight-item:hover .video-wrapper,
+        .spotlight-item:hover .hover-image {
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .shopify-video-wrapper {
+            z-index: 1;
+        }
+
+        .content {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .content .title {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #232323;
+        }
+
+        .content .text {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Tablet layout - 2 columns */
+        @media screen and (max-width: 989px) {
+            .spotlight-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            /* Tablet animations - for 2 column layout */
+            .spotlight-item:hover {
+                transform: scale(1.05);
+                z-index: 2;
+            }
+        }
+
+        /* Mobile layout - smaller text and spacing */
+        @media screen and (max-width: 749px) {
+            .spotlight-grid {
+                gap: 10px;
+            }
+
+            .content {
+                padding: 15px 0;
+            }
+
+            .content .title {
+                font-size: 16px;
+            }
+
+            .content .text {
+                font-size: 13px;
+            }
+            
+            /* Mobile animations - simpler scale effect */
+            .spotlight-item:hover {
+                transform: scale(1.03);
+                z-index: 2;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.querySelector('.spotlight-grid');
+            const isMobile = window.innerWidth <= 989;
+            
+            // Function to handle hover effects for desktop (3-column layout)
+            function handleDesktopHover(itemIndex, isHovering) {
+                // Only apply the paired animations on desktop
+                if (window.innerWidth >= 990) {
+                    const isPairTop = itemIndex <= 3;
+                    const pairIndex = isPairTop ? itemIndex + 3 : itemIndex - 3;
+                    
+                    // Make sure we don't exceed the number of items
+                    if (pairIndex > 0 && pairIndex <= grid.querySelectorAll('.spotlight-item').length) {
+                        const pairItem = grid.querySelector(`[data-index="${pairIndex}"]`);
+                        if (pairItem) {
+                            pairItem.style.transform = isHovering ? 
+                                (isPairTop ? 'translateY(20px)' : 'translateY(-20px)') : '';
+                            pairItem.style.zIndex = isHovering ? '1' : '';
+                        }
+                    }
+                }
+            }
+            
+            // Function to handle video playback on hover
+            function handleVideoPlayback(item, isHovering) {
+                const video = item.querySelector('.shopify-video');
+                if (video) {
+                    if (isHovering) {
+                        // Play the video when hovering
+                        video.play().catch(e => {
+                            console.error('Video play failed:', e);
+                        });
+                    } else {
+                        // Pause and reset the video when not hovering
+                        video.pause();
+                        video.currentTime = 0;
+                    }
+                }
+            }
+
+            // Add hover listeners to all items
+            grid.querySelectorAll('.spotlight-item').forEach(item => {
+                const index = parseInt(item.getAttribute('data-index'));
+                
+                item.addEventListener('mouseenter', () => {
+                    handleDesktopHover(index, true);
+                    handleVideoPlayback(item, true);
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    handleDesktopHover(index, false);
+                    handleVideoPlayback(item, false);
+                });
+                
+                // Add touch events for mobile
+                item.addEventListener('touchstart', () => {
+                    handleVideoPlayback(item, true);
+                }, { passive: true });
+                
+                item.addEventListener('touchend', () => {
+                    // Don't stop the video on mobile after touch - let it play
+                }, { passive: true });
+            });
+            
+            // Pre-load Shopify videos
+            document.querySelectorAll('.shopify-video').forEach(video => {
+                // Add these event listeners to help with autoplay issues
+                video.addEventListener('canplaythrough', function() {
+                    video.setAttribute('data-ready', 'true');
+                });
+                
+                // Force load the video
+                video.load();
+            });
+            
+            // Update animations on resize
+            window.addEventListener('resize', function() {
+                const isMobileNow = window.innerWidth <= 989;
+                
+                // If screen size category changed, reset all transformations
+                if (isMobile !== isMobileNow) {
+                    grid.querySelectorAll('.spotlight-item').forEach(item => {
+                        item.style.transform = '';
+                        item.style.zIndex = '';
+                    });
+                }
+            });
+        });
+    </script>
+{% endif %}
+
+{% schema %}
+{
+    "name": "Spotlight Block",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Spotlight Block"
+        },
+        {
+            "type": "url",
+            "id": "heading_link",
+            "label": "Heading Link",
+            "info": "Optional URL for the heading"
+        },
+        {
+            "type": "select",
+            "id": "container",
+            "label": "Container Type",
+            "options": [
+                {
+                    "value": "container",
+                    "label": "Container"
+                },
+                {
+                    "value": "fullwidth",
+                    "label": "Full Width"
+                }
+            ],
+            "default": "container"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "spotlight_item",
+            "name": "Spotlight Item",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Main Image"
+                },
+                {
+                    "type": "video_url",
+                    "id": "hover_video",
+                    "label": "Hover Video",
+                    "accept": ["youtube", "vimeo"],
+                    "info": "Add YouTube or Vimeo video URL"
+                },
+                {
+                    "type": "text",
+                    "id": "shopify_video_url",
+                    "label": "Shopify Video URL",
+                    "info": "Add Shopify CDN video URL (e.g., https://cdn.shopify.com/videos/c/o/v/9b3106fb8a6d4532a4d321abce2c88c9.mp4)"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "hover_image",
+                    "label": "Hover Image (GIF)",
+                    "info": "Will be used if no video is selected"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Collection Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "url",
+                    "id": "collection_link",
+                    "label": "Collection Link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Spotlight Block",
+            "blocks": [
+                {
+                    "type": "spotlight_item"
+                },
+                {
+                    "type": "spotlight_item"
+                },
+                {
+                    "type": "spotlight_item"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

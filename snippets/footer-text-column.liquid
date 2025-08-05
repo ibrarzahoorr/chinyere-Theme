@@ -1,0 +1,80 @@
+{% comment %} block__text_first: block__text_first, footer_top_title_color,  address_last: true / false {% endcomment %}
+
+{% liquid
+  assign show_social = block.settings.show_social
+  assign layout_style = block.settings.layout_style
+  assign custom_width = block.settings.custom_width | append: '%'
+  assign mg_bottom = block.settings.mg_bottom | append: 'px'
+
+  assign heading = block.settings.heading
+  assign subtext = block.settings.subtext
+  assign logo = block.settings.logo
+
+  assign logo_margin_bottom = block.settings.logo_margin_bottom | append: 'px'
+  assign show_social = block.settings.show_social
+  assign final_icon_color = footer_top_title_color
+  if block.settings.icon_color != blank
+    assign final_icon_color = block.settings.icon_color
+  endif
+
+  if address_last == null or address_last == blank
+    assign address_last = false
+  endif
+%}
+
+<style>
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .footer-contact a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-contact .icon {
+    font-size: 20px; 
+    color: {{ final_icon_color }};
+  }
+</style>
+
+<div class="footer-block__item footer-block__column footer-block__{{ block.type }}" style="--block-custom-width: {{ custom_width }}; --block-margin-bottom: {{ mg_bottom }}">
+  <div>
+    {%- if heading != blank -%}
+      <h2 class="footer-block__heading" data-toggle-column-footer>{{- heading | escape -}}</h2>
+    {%- endif -%}
+
+    <div class="footer-contact">
+      <!-- Customer Service Call -->
+      <a href="tel:+923111555259">
+        <span class="icon"><i class="fas fa-phone-alt"></i></span> (+92) 3111 555 259
+      </a>
+
+     <!-- Add Font Awesome in your theme.liquid (if not already included) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<!-- Customer Service WhatsApp -->
+<a href="https://wa.me/923098882333" target="_blank">
+  <span class="icon"><i class="fab fa-whatsapp"></i></span> (+92) 309 888 2333
+</a>
+
+      <!-- For Couture -->
+      <a href="tel:+924235751553">
+         <span class="icon"><i class="fas fa-phone-alt"></i></span> Couture: (+92) 42 357 51553-4
+      </a>
+
+      <!-- Email -->
+      <a href="mailto:customercare@chinyere.pk">
+         <span class="icon"><i class="fas fa-envelope"></i></span> customercare@chinyere.pk
+      </a>
+    </div>
+  </div>
+
+  {%- if show_social -%}
+    {% render 'footer-social', block: block, social_is_nested: true %}
+  {%- endif -%}
+</div>

@@ -1,0 +1,185 @@
+{% comment %}Page Header with Multilingual Support{% endcomment %}
+{% include 'breadcrumb' %}
+<section class="page-section px-custom">
+  <div class="container-fluid px-section-custom">
+    {% comment %}Page Title{% endcomment %}
+    <header class="page-header text-center mb-4 px-title-custom">
+      <h1 class="page-title">
+        {{ page.title | split: '|' | first | strip }}
+      </h1>
+    </header>
+
+    {% comment %}Multilingual Content Handling{% endcomment %}
+    <div class="page-content px-content-custom">
+      {% if settings.enable_multilang %}
+        <div class="rte lang1 mb-4">
+          {{ page.content | split: '[lang2]' | first | strip }}
+        </div>
+        <div class="rte lang2 mb-4">
+          {{ page.content | split: '[lang2]' | last | strip }}
+        </div>
+      {% else %}
+        <div class="rte">
+          {{ page.content | split: '[lang2]' | first | strip }}
+        </div>
+      {% endif %}
+    </div>
+
+    {% comment %}Gallery Grid Section{% endcomment %}
+    {% if section.settings.gallery_images.size > 0 %}
+      <div class="gallery-grid px-gallery-custom">
+        <div class="row g-4">
+          {% for image in section.settings.gallery_images %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 px-image-custom">
+              <div class="gallery-item position-relative overflow-hidden">
+                {% if image %}
+                  <figure class="gallery-figure m-0">
+                    <img 
+                      src="{{ image | img_url: 'medium' }}" 
+                      alt="{{ image.alt | escape }}"
+                      class="img-fluid w-100 gallery-image transition-transform"
+                      loading="lazy"
+                    >
+                    {% if image.alt %}
+                      <figcaption class="gallery-caption position-absolute bottom-0 start-0 w-100 text-center py-2">
+                        {{ image.alt }}
+                      </figcaption>
+                    {% endif %}
+                  </figure>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% section 'couture-book-appointment' %}
+<style>
+  /* Padding Utility Classes */
+  .px-custom {
+    padding-left: var(--page-padding-left, 0);
+    padding-right: var(--page-padding-right, 0);
+  }
+
+  .px-section-custom {
+    padding-left: var(--section-padding-left, 15px);
+    padding-right: var(--section-padding-right, 15px);
+  }
+
+  .px-title-custom {
+    padding-left: var(--title-padding-left, 0);
+    padding-right: var(--title-padding-right, 0);
+  }
+
+  .px-content-custom {
+    padding-left: var(--content-padding-left, 0);
+    padding-right: var(--content-padding-right, 0);
+  }
+
+  .px-gallery-custom {
+    padding-left: var(--gallery-padding-left, 0);
+    padding-right: var(--gallery-padding-right, 0);
+  }
+
+  .px-image-custom {
+    padding-left: var(--image-padding-left, 10px);
+    padding-right: var(--image-padding-right, 10px);
+  }
+
+  /* Gallery Grid Styles */
+  .gallery-grid .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-grid .gallery-item:hover {
+    transform: scale(1.05);
+  }
+
+  .gallery-grid .gallery-figure {
+    margin: 0;
+    position: relative;
+  }
+
+  .gallery-grid .gallery-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-grid .gallery-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 8px;
+    font-size: 0.875rem;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 1200px) {
+    .gallery-grid .gallery-image {
+      height: 250px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .gallery-grid .gallery-image {
+      height: 200px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .gallery-grid .gallery-image {
+      height: 180px;
+    }
+    
+    /* Responsive Padding Adjustments */
+    .px-custom,
+    .px-section-custom,
+    .px-title-custom,
+    .px-content-custom,
+    .px-gallery-custom {
+      padding-left: var(--mobile-padding-left, 10px);
+      padding-right: var(--mobile-padding-right, 10px);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .gallery-grid .gallery-image {
+      height: 150px;
+    }
+  }
+
+  /* Utility Classes */
+  .transition-transform {
+    transition: transform 0.3s ease;
+  }
+</style>
+<script>
+  // You can set these variables in your theme settings or inline
+  document.documentElement.style.setProperty('--page-padding-left', '20px');
+  document.documentElement.style.setProperty('--page-padding-right', '20px');
+  
+  document.documentElement.style.setProperty('--section-padding-left', '15px');
+  document.documentElement.style.setProperty('--section-padding-right', '15px');
+  
+  document.documentElement.style.setProperty('--title-padding-left', '0');
+  document.documentElement.style.setProperty('--title-padding-right', '0');
+  
+  document.documentElement.style.setProperty('--content-padding-left', '10px');
+  document.documentElement.style.setProperty('--content-padding-right', '10px');
+  
+  document.documentElement.style.setProperty('--gallery-padding-left', '0');
+  document.documentElement.style.setProperty('--gallery-padding-right', '0');
+  
+  document.documentElement.style.setProperty('--image-padding-left', '10px');
+  document.documentElement.style.setProperty('--image-padding-right', '10px');
+  
+  document.documentElement.style.setProperty('--mobile-padding-left', '10px');
+  document.documentElement.style.setProperty('--mobile-padding-right', '10px');
+</script>

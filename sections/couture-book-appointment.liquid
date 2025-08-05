@@ -1,0 +1,409 @@
+<style>
+  .row-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }  
+  .row-wrap .col-wrap-4 {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }  
+  
+  @media (min-width: 768px) {
+    .row-wrap .col-wrap-4 {
+          flex: 0 0 33.333333%;
+          max-width: 33.333333%;
+        }    
+    }
+ 
+  .couture-wrapper .img-title {
+    margin: 15px 0;  
+  }
+  
+  .couture-wrapper .img-title .title {
+  	font-size: 18px;
+    text-align: center;
+  }
+  .couture-wrapper .couture-item-cstm {
+  	text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .cstm-modal-wrap {
+  	position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 999;
+    display: none;
+	padding: 15px;
+    overflow-y: auto;    
+  }
+  
+  .cstm-modal-wrap .cstm-modal {
+	background-color: #fff;
+  	max-width: 400px;
+    margin: 0 auto;
+    padding: 15px;
+  }  
+
+   .cstm-modal-wrap .cstm-modal .inquire-pop-up {
+      position: relative;
+   }
+  
+  .cstm-modal-wrap .cstm-modal .closing-btn{
+    width:25px;
+    height:25px;
+    background: transparent;
+    border: none;
+    position: absolute;
+    top:0;
+    right: 0;
+  }  
+
+  .inquire-pop-up .whatsapp-div {
+    background-color: #25D366;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+   }
+
+  .inquire-pop-up .whatsapp-div a{
+  	color: #fff;
+    font-size: 16px;    
+    text-decoration: none;
+  }
+  
+  .inquire-pop-up .cstm-form{
+	margin: 15px 0;
+  }    
+  
+  .inquire-pop-up .cstm-form .inquire-form { 
+    display: block;
+    color: #808080;
+    margin: 0;
+  }  
+  
+  .inquire-pop-up .cstm-form .cstm-input { 
+    display: block;
+    width: 100%;
+    resize: none;
+  }  
+  
+  .inquire-pop-up .cstm-btn-form { 
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    background-color: #808080;
+    color: #fff;
+    font-size: 16px;
+   	border: 1px solid transparent;
+    outline: none;
+  }  
+  
+  .inquire-pop-up .cstm-btn-form:hover {
+  	color: #000;
+    background-color: #fff;
+   	border: 1px solid #000;
+  }
+ .coture_custom_button {
+    display: flex;
+    margin-bottom: 1rem !important;
+    background: black;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+  .coture_custom_button:hover{
+   background: white;
+   color: black;
+  border: 1px solid gray;
+   }
+  .pop-up-paragraph{
+    text-align: center; 
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .coture_custom_button a{
+    color: white;
+    }
+  
+  .coture_custom_button:hover a{
+    color: black;    
+  }
+
+ #bridal-couture .main-content.container {
+    padding-top: 30px !important;
+}
+  .inquire-pop-up .call-div {
+    background-color: #000000;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.inquire-pop-up .call-div a {
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+
+
+
+
+  .form-wrapper {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.card-app {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.cstm-form {
+  margin-bottom: 20px;
+}
+
+.inquire-form {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.cstm-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+textarea.cstm-input {
+  resize: vertical;
+}
+
+.cstm-btn-form {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.cstm-btn-form:hover {
+  background-color: #0056b3;
+}
+  
+.contact-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.whatsapp-div,
+.call-div {
+  flex-basis: 48%;
+}
+
+.whatsapp-btns,
+.call-btns {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+
+.whatsapp-btns img,
+.call-btns img {
+  width: 26px;
+  height: 26px;
+  margin-right: 5px;
+}
+
+ .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .button-container a {
+    margin-bottom: 10px;
+  }
+
+  
+</style>
+
+<div class="couture-wrapper">
+	<div class="row-wrap">
+      {% for block in section.blocks %}
+          <div class="col-wrap-4">
+            <a class="couture-item-cstm" data-product-title="{{ block.settings.product_title }}">
+              <div class="img-section">
+                  <img src="{{ block.settings.product_img | img_url: 'master' }}" width="100%" height="auto">
+              </div>
+            </a>  
+              <div class="img-title">
+                <div class="title">{{ block.settings.product_title }}</div>
+              </div>
+              
+              <p class="pop-up-paragraph couture-item-cstm" data-product-title="{{ block.settings.product_title }}">
+                Price on Request
+              </p>
+             <button class="coture_custom_button">
+               <a class="couture-item-cstm" data-product-title="{{ block.settings.product_title }}">Book an Appointment</a>  
+             </button>
+        	
+          </div>
+      {% endfor %}
+  	</div>
+</div>
+<div class="cstm-modal-wrap">
+  <div class="cstm-modal">
+      <div class="inquire-pop-up">
+                  <button class="closing-btn">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+                      <path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path>
+                    </svg>    
+                  </button> 
+
+
+        
+
+   {% form 'contact' %}
+  <div class="form-wrapper">
+
+
+
+
+    
+   <div class="cstm-info">
+  <div class="card-app">
+    <h2>Book An Appointment</h2>
+    <div class="button-container">
+      <div class="whatsapp-div">
+        <a class="whatsapp-btns" href="https://api.whatsapp.com/send?phone=+923098882333&amp;text=Hi, I want to consult about this product" target="_blank">
+          <img src="//cdn.shopify.com/s/files/1/1625/9005/t/26/assets/whatsapp_26x.png?1189" style="padding-right: 4px; padding-bottom: 2px;">
+          <span>Chat with fashion consultant</span>
+        </a>
+      </div>
+      <div class="call-div">
+        <a class="call-btns" href="tel:+924235751553" target="_blank">
+          <img src="//cdn.shopify.com/s/files/1/0510/7535/0693/files/pngegg_26x26.png" style="padding-right: 4px; padding-bottom: 2px;">
+          <span>(+92) 042 35751553 - 4</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    
+    <div class="cstm-form">
+      <label class="inquire-form" for="product-title">Product Title*</label>
+      <input id="product-title" type="text" class="cstm-input" name="contact[ProductTitle]" placeholder="Product Title" readonly>
+    </div>
+    <div class="cstm-form">
+      <label class="inquire-form" for="product-name">Name*</label>
+      <input id="product-name" type="text" class="cstm-input" name="contact[ProductName]" placeholder="Customer Name">
+    </div>
+    <div class="cstm-form">
+      <label class="inquire-form" for="product-email">Email*</label>
+      <input id="product-email" type="text" class="cstm-input" name="contact[ProductEmail]" placeholder="Email@gmail.com">
+    </div>
+    <div class="cstm-form">
+      <label class="inquire-form" for="product-number-whatsapp">WhatsApp Number*</label>
+      <input id="product-number-whatsapp" type="text" class="cstm-input" name="contact[ProductNumberWhatsApp]" placeholder="WhatsApp">
+    </div>
+    <div class="cstm-form">
+      <label class="inquire-form" for="product-number-telephone">Telephone Number*</label>
+      <input id="product-number-telephone" type="text" class="cstm-input" name="contact[ProductNumberTelephone]" placeholder="Telephone">
+    </div>
+    <div class="cstm-form">
+      <label class="inquire-form" for="product-message">Message*</label>
+      <textarea id="product-message" class="cstm-input" rows="4" name="contact[ProductMessage]" placeholder="Message"></textarea>
+    </div>
+    <button type="submit" class="cstm-btn-form">Submit</button> 
+  </div>  
+{% endform %}
+
+
+
+
+
+        
+
+      </div>                
+  </div>
+</div>
+{% schema %}
+    {
+        "name": "Couture",
+        "blocks": [
+            {
+          "type": "select",
+          "name": "Block",
+            "settings": [
+                {
+                  "type": "text",
+                  "id": "product_title",
+                  "label": "Product Title Here"
+                },
+                {
+                  "type": "image_picker",
+                  "id": "product_img",
+                  "label": "Product Image Here"
+                }
+                        ]	
+            }
+        ]
+    }
+{% endschema %}
+
+<script>
+  
+  $(document).ready(function() {
+    var product_title = $('#product-title');
+    $(".couture-wrapper .couture-item-cstm").click(function() {
+      	$(".cstm-modal-wrap").show();
+        var product_name = $(this).data('product-title');
+        product_title.val(product_name);
+        $('body').css('overflow', 'hidden');      
+    });
+    
+    $(".cstm-modal-wrap .cstm-modal .inquire-pop-up .closing-btn").click(function() {
+      $(".cstm-modal-wrap").hide();
+      $('body').css('overflow', 'visible');
+    });
+  });
+</script>

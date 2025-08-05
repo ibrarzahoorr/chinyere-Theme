@@ -1,0 +1,180 @@
+<section class="custom-filter-toolbar">
+  <!-- Refined By -->
+  <div class="refined-by">
+    <label>Refined By:</label>
+    <div id="selected-filters"></div>
+    <button class="btn-clear" onclick="clearFilters()">Clear All</button>
+  </div>
+
+  <!-- Price Filter -->
+  <div class="filter-options">
+    <label>Price Range:</label>
+    <input type="range" id="price-range" min="0" max="10000" step="100" value="5000" oninput="updatePriceValue(this.value)">
+    <span id="price-value">5000</span>
+  </div>
+
+  <!-- Fabric & Colour Filters -->
+  <div class="dropdown-filters">
+    <label>Fabric:</label>
+    <select id="fabric-filter">
+      <option value="">Select Fabric</option>
+      {% for product in collection.products %}
+        {% assign fabric = product.metafields.custom.fabric %}
+        {% if fabric %}
+          <option value="{{ fabric }}">{{ fabric }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+
+    <label>Colour:</label>
+    <select id="colour-filter">
+      <option value="">Select Colour</option>
+      {% for product in collection.products %}
+        {% assign colour = product.metafields.custom.colour %}
+        {% if colour %}
+          <option value="{{ colour }}">{{ colour }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- View As Toggle -->
+  <div class="view-toggle">
+    <label>View as:</label>
+    <button class="btn-toggle" id="grid-view"><i class="fas fa-th"></i></button>
+    <button class="btn-toggle" id="list-view"><i class="fas fa-list"></i></button>
+    <button class="btn-toggle" id="compact-view"><i class="fas fa-th-large"></i></button>
+  </div>
+
+  <!-- Apply Filters Button -->
+  <button class="btn-primary" onclick="applyFilters()">Apply Filters</button>
+</section>
+
+<script>
+function updatePriceValue(value) {
+  document.getElementById("price-value").innerText = value;
+}
+
+document.getElementById("grid-view").addEventListener("click", function() {
+  document.body.classList.add("grid-layout");
+  document.body.classList.remove("list-layout", "compact-layout");
+});
+
+document.getElementById("list-view").addEventListener("click", function() {
+  document.body.classList.add("list-layout");
+  document.body.classList.remove("grid-layout", "compact-layout");
+});
+
+document.getElementById("compact-view").addEventListener("click", function() {
+  document.body.classList.add("compact-layout");
+  document.body.classList.remove("grid-layout", "list-layout");
+});
+
+function applyFilters() {
+  let price = document.getElementById("price-range").value;
+  let fabric = document.getElementById("fabric-filter").value;
+  let colour = document.getElementById("colour-filter").value;
+
+  let url = new URL(window.location.href);
+  if (price) url.searchParams.set("price", price);
+  if (fabric) url.searchParams.set("fabric", fabric);
+  if (colour) url.searchParams.set("colour", colour);
+
+  window.location.href = url.toString();
+}
+
+function clearFilters() {
+  window.location.href = window.location.pathname;
+}
+</script>
+
+<style>
+.custom-filter-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  gap: 15px;
+}
+
+/* Refined By */
+.refined-by {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#selected-filters {
+  font-weight: bold;
+  color: #333;
+}
+.btn-clear {
+  background: none;
+  border: 1px solid red;
+  color: red;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-clear:hover {
+  background: red;
+  color: white;
+}
+
+/* Filters */
+.filter-options, .dropdown-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+input[type="range"] {
+  width: 150px;
+}
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+/* View Toggle */
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-toggle {
+  background: none;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-toggle i {
+  font-size: 18px;
+}
+.btn-toggle:hover {
+  background: #f0f0f0;
+}
+
+/* Grid, List & Compact View */
+.grid-layout .product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.list-layout .product-list {
+  display: block;
+}
+
+.compact-layout .product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 5px;
+}
+</style>
